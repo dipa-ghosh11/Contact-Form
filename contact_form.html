@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="./contact_form.css">
+</head>
+<body>
+    <div class="flex flex-row space-x-6 cf h-screen">
+        <div class="h-[500px] w-[500px]">
+            <img src="./Images/CF4.jpg" alt="" class="">
+        </div>
+        <div class="text-white bg-black h-[500px] w-[500px] flex flex-col items-center">
+            <h1 class="text-5xl font-bold text-white p-8">Contact Us</h1>
+            <form action="" class="">
+                <div class="flex">
+                    <div>
+                        <!-- <label for="name" id="name" class="text-2xl font-semibold">Name</label> -->
+                        <input type="text" class="border-[#00ffff] border-1" placeholder="Name">
+                    </div>
+                    <div>
+                        <!-- <label for="email" id="email" class="text-2xl font-semibold">Email</label> -->
+                        <input type="text" class="border-[#00ffff] border-1" placeholder="Email">
+                    </div>
+                </div>
+                
+                <div>
+                    <!-- <label for="message" class="text-2xl font-semibold">Message</label> -->
+                    <textarea name="" id="message" class="border-[#00ffff] border-1" placeholder="Message"></textarea>
+                </div>
+                <div>
+                    <input type="submit" class="border-[#00ffff] border-1">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
