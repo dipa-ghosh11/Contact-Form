@@ -6,29 +6,35 @@
     <title>Contact Form</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="./contact_form.css">
+    <!-- <script src="./contact_form.js"></script> -->
 </head>
 <body>
-    <div class="flex  min-h-screen items-center cf justify-center">
+    <div class="flex  min-h-screen items-center cf justify-center max-md:flex-col ">
         <div class="h-[500px] w-[500px]">
             <img src="./Images/CF4.jpg" alt="" class="rounded-bl-3xl">
         </div>
-        <div class="text-white bg-[#1f242d] h-[500px] w-[500px] flex flex-col items-center gap-6 p-9 rounded-tr-3xl">
-            <h1 class="text-5xl font-bold text-white my-5">Contact Us</h1>
-            <form action="" class="space-y-5">
+        <div class="text-white bg-[#1f242d] h-[500px] w-[500px] flex flex-col items-center gap-6 p-9 rounded-tr-3xl justify-center">
+            <h1 class="text-5xl font-bold text-white">Contact Us</h1>
+            <form action="" class="space-y-5" id="contactForm">
                 <div class="flex gap-4">
-                    <div>
+                    <div class="relative">
                         <!-- <label for="name" id="name" class="text-2xl font-semibold">Name</label> -->
-                        <input type="text" class="w-full px-2 py-2 border border-[#00ffff] rounded-lg focus:outline-none placeholder:pl-0" placeholder="Name">
+                        <input type="text" id="name" class="w-full px-2 py-2 border-2 border-[#00ffff] rounded-lg focus:outline-none placeholder:pl-0" placeholder="Name">
+                        <div class="text-red-600 text-[14.5px] absolute hidden" id="nameError">Name field must be filled</div>
+                         
+                        
                     </div>
                     <div>
                         <!-- <label for="email" id="email" class="text-2xl font-semibold">Email</label> -->
-                        <input type="text" class="w-full px-2 py-2 border border-[#00ffff] rounded-lg focus:outline-none placeholder:pl-0 " placeholder="Email">
+                        <input type="email" id="email" class="w-full px-2 py-2 border-2 border-[#00ffff] rounded-lg focus:outline-none" placeholder="Email">
+                        <div class="text-[14.5px] text-red-600 text-left hidden" id="emailError">Email field must be filled</div>
                     </div>
                 </div>
                 
                 <div class="txt">
                     <!-- <label for="message" class="text-2xl font-semibold">Message</label> -->
-                    <textarea name="" id="message" rows="7" class="w-full px-4 py-2 border border-[#00ffff] focus:outline-none rounded-lg  placeholder:pl-0 resize-none" placeholder="Message"></textarea>
+                    <textarea name="" id="message" rows="7" class="w-full px-4 py-2 border-2 border-[#00ffff] focus:outline-none rounded-lg  placeholder:pl-0 resize-none" placeholder="Message"></textarea>
+                    <div class="text-[14.5px] text-red-600 text-left hidden" id="messageError">Message field must be filled</div>
                 </div>
 
                 <div class="text-center sub-box">
@@ -37,6 +43,77 @@
             </form>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const nameInput = document.getElementById("name");
+            const emailInput = document.getElementById("email");
+            const messageInput = document.getElementById("message");
+            const contactForm = document.getElementById("contactForm");
+            
+
+            
+            nameInput.value = localStorage.getItem("name") || "";
+            emailInput.value = localStorage.getItem("email") || "";
+            messageInput.value = localStorage.getItem("message") || "";
+
+            
+            nameInput.addEventListener("input", () => localStorage.setItem("name", nameInput.value));
+            emailInput.addEventListener("input", () => localStorage.setItem("email", emailInput.value));
+            messageInput.addEventListener("input", () => localStorage.setItem("message", messageInput.value));
+
+            
+            contactForm.addEventListener("submit", function (event) {
+                event.preventDefault(); 
+
+                let isValid = true;
+
+                
+                const nameRegex = /^[A-Za-z\s]{3,}$/;
+                if (!nameRegex.test(nameInput.value.trim())) {
+                    document.getElementById("nameError").textContent = "Only letters, spaces & min 3 chars.";
+                    document.getElementById("nameError").classList.remove("hidden");
+                    isValid = false;
+                } else {
+                    document.getElementById("nameError").classList.add("hidden");
+                }
+
+                if (emailInput.value.trim() === "" || !emailInput.value.includes("@")) {
+                    document.getElementById("emailError").classList.remove("hidden");
+                    isValid = false;
+                } else {
+                    document.getElementById("emailError").classList.add("hidden");
+                }
+
+                if (messageInput.value.trim() === "") {
+                    document.getElementById("messageError").classList.remove("hidden");
+                    isValid = false;
+                } else {
+                    document.getElementById("messageError").classList.add("hidden");
+                }
+
+                
+                if (isValid) {
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("email");
+                    localStorage.removeItem("message");
+
+                    contactForm.reset();
+
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Message sent successfully!",
+                        icon: "success"
+                    });
+
+                    setTimeout(() => {
+                        confirmationMessage.classList.add("hidden");
+                    }, 3000);
+                }
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
 
